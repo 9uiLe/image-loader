@@ -17,6 +17,9 @@ let interface = Target.target(
     name: "Interface",
     dependencies: [
         model
+    ],
+    plugins: [
+        runMockoloPlugin
     ]
 )
 
