@@ -2,6 +2,15 @@
 
 import PackageDescription
 
+// MARK: - Plugin
+
+let runMockoloPlugin = Target.PluginUsage.plugin(
+    name: "RunMockolo",
+    package: "run-mockolo"
+)
+
+// MARK: - Source
+
 let model = Target.target(name: "Model")
 
 let interface = Target.target(
@@ -26,7 +35,9 @@ let package = Package.package(
     platforms: [
         .iOS(.v18)
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/9uiLe/run-mockolo", exact: "1.0.2")
+    ],
     targets: [
         model,
         interface,
@@ -52,6 +63,7 @@ extension Target {
         dependencies: [Target] = [],
         dependencyLibraries: [Target.Dependency] = [],
         resources: [Resource] = [],
+        plugins: [Target.PluginUsage] = [],
         swiftLanguageMode: SwiftLanguageMode = .v6
     ) -> Target {
         .target(
@@ -61,7 +73,8 @@ extension Target {
             resources: resources,
             swiftSettings: [
                 .swiftLanguageMode(swiftLanguageMode)
-            ]
+            ],
+            plugins: plugins
         )
     }
 
