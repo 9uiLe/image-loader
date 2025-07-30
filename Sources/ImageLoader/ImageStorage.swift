@@ -16,20 +16,20 @@ public actor ImageStorage: ImageStorageProtocol {
 
     public func store(_ image: UIImage, for key: String) async throws {
         // メモリキャッシュに保存
-        let storeMemoryCache: () async -> Void = {
+        let storeMemoryCache: () async -> Void = { [memoryCache] in
             let cost = image.jpegData(compressionQuality: 1.0)?.count ?? 0
             await memoryCache.store(image, for: key, cost: cost)
         }
 
         // ディスクキャッシュに保存
-        let storeDiskCache: () async throws -> Void = {
+        let storeDiskCache: () async throws -> Void = { [diskCache] in
             guard let data = image.jpegData(compressionQuality: 0.8) else { return }
             try await diskCache.store(data, for: key)
         }
 
         let (_, _) = try await (
-            storeMemoryCache,
-            storeDiskCache
+            storeMemoryCache(),
+            storeDiskCache()
         )
     }
 
@@ -52,15 +52,15 @@ public actor ImageStorage: ImageStorageProtocol {
     }
 
     public func remove(for key: String) async throws {
-        async let removeMemoryCache = memoryCache.remove(for: key)
-        async let removeDiskCache = diskCache.remove(for: key)
+        async let removeMemoryCache: Void = memoryCache.remove(for: key)
+        async let removeDiskCache: Void = diskCache.remove(for: key)
 
         let (_, _) = try await (removeMemoryCache, removeDiskCache)
     }
 
     public func removeAll() async throws {
-        async let removeAllMemoryCache = memoryCache.removeAll()
-        async let removeAllDiskCache = diskCache.removeAll()
+        async let removeAllMemoryCache: Void = memoryCache.removeAll()
+        async let removeAllDiskCache: Void = diskCache.removeAll()
 
         let (_, _) = try await (removeAllMemoryCache, removeAllDiskCache)
     }

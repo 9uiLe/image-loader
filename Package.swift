@@ -20,8 +20,8 @@ let interface = Target.target(
     ]
 )
 
-let core = Target.target(
-    name: "Core",
+let imageLoader = Target.target(
+    name: "ImageLoader",
     dependencies: [
         model,
         interface
@@ -41,7 +41,7 @@ let package = Package.package(
     targets: [
         model,
         interface,
-        core
+        imageLoader
     ],
     testTargets: []
 )
