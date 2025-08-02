@@ -9,9 +9,11 @@ let runMockoloPlugin = Target.PluginUsage.plugin(
     package: "run-mockolo"
 )
 
-// MARK: - Source
+// MARK: - Model
 
 let model = Target.target(name: "Model")
+
+// MARK: - Interface
 
 let storageInterface = Target.target(
     name: "StorageInterface",
@@ -19,6 +21,21 @@ let storageInterface = Target.target(
         runMockoloPlugin
     ]
 )
+let networkInterface = Target.target(
+    name: "NetworkInterface",
+    plugins: [
+        runMockoloPlugin
+    ]
+)
+let serviceInterface = Target.target(
+    name: "ServiceInterface",
+    plugins: [
+        runMockoloPlugin
+    ]
+)
+
+// MARK: - Core
+
 let storage = Target.target(
     name: "Storage",
     dependencies: [
@@ -27,12 +44,6 @@ let storage = Target.target(
     ]
 )
 
-let serviceInterface = Target.target(
-    name: "ServiceInterface",
-    plugins: [
-        runMockoloPlugin
-    ]
-)
 let service = Target.target(
     name: "Service",
     dependencies: [
@@ -42,12 +53,6 @@ let service = Target.target(
     ]
 )
 
-let networkInterface = Target.target(
-    name: "NetworkInterface",
-    plugins: [
-        runMockoloPlugin
-    ]
-)
 let network = Target.target(
     name: "Network",
     dependencies: [
