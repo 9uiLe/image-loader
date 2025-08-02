@@ -15,41 +15,44 @@ let model = Target.target(name: "Model")
 
 let storageInterface = Target.target(
     name: "StorageInterface",
-    dependencies: [
-        model
-    ],
     plugins: [
         runMockoloPlugin
+    ]
+)
+let storage = Target.target(
+    name: "Storage",
+    dependencies: [
+        model,
+        storageInterface,
     ]
 )
 
 let serviceInterface = Target.target(
     name: "ServiceInterface",
-    dependencies: [
-        model
-    ],
     plugins: [
         runMockoloPlugin
+    ]
+)
+let service = Target.target(
+    name: "Service",
+    dependencies: [
+        serviceInterface,
+        storageInterface,
+        networkInterface,
     ]
 )
 
 let networkInterface = Target.target(
     name: "NetworkInterface",
-    dependencies: [
-        model
-    ],
     plugins: [
         runMockoloPlugin
     ]
 )
-
-let imageLoader = Target.target(
-    name: "ImageLoader",
+let network = Target.target(
+    name: "Network",
     dependencies: [
         model,
-        storageInterface,
-        serviceInterface,
-        networkInterface
+        networkInterface,
     ]
 )
 
@@ -65,10 +68,21 @@ let package = Package.package(
     ],
     targets: [
         model,
+
+        // MARK: Storage
+
         storageInterface,
+        storage,
+
+        // MARK: Service
+
         serviceInterface,
+        service,
+
+        // MARK: Network
+
         networkInterface,
-        imageLoader
+        network,
     ],
     testTargets: []
 )
