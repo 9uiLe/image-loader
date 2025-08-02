@@ -1,5 +1,3 @@
-import Foundation
-import StorageInterface
 import UIKit
 
 public actor ImageStorage: ImageStorageProtocol {

@@ -1,5 +1,4 @@
 import Foundation
-import ServiceInterface
 
 public actor ImagePrefetchService: ImagePrefetchServiceProtocol {
     private let loadingService: any ImageLoadingServiceProtocol

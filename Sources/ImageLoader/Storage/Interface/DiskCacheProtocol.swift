@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 /// @mockable
 public protocol DiskCacheProtocol: Actor {

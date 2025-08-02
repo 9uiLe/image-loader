@@ -9,55 +9,12 @@ let runMockoloPlugin = Target.PluginUsage.plugin(
     package: "run-mockolo"
 )
 
-// MARK: - Model
-
-let model = Target.target(name: "Model")
-
-// MARK: - Interface
-
-let storageInterface = Target.target(
-    name: "StorageInterface",
-    plugins: [
-        runMockoloPlugin
-    ]
-)
-let networkInterface = Target.target(
-    name: "NetworkInterface",
-    plugins: [
-        runMockoloPlugin
-    ]
-)
-let serviceInterface = Target.target(
-    name: "ServiceInterface",
-    plugins: [
-        runMockoloPlugin
-    ]
-)
-
 // MARK: - Core
 
-let storage = Target.target(
-    name: "Storage",
-    dependencies: [
-        model,
-        storageInterface,
-    ]
-)
-
-let service = Target.target(
-    name: "Service",
-    dependencies: [
-        serviceInterface,
-        storageInterface,
-        networkInterface,
-    ]
-)
-
-let network = Target.target(
-    name: "Network",
-    dependencies: [
-        model,
-        networkInterface,
+let imageLoader = Target.target(
+    name: "ImageLoader",
+    plugins: [
+        runMockoloPlugin
     ]
 )
 
@@ -66,28 +23,13 @@ let network = Target.target(
 let package = Package.package(
     name: "image-loader",
     platforms: [
-        .iOS(.v18)
+        .iOS(.v13)
     ],
     dependencies: [
         .package(url: "https://github.com/9uiLe/run-mockolo", exact: "1.0.2")
     ],
     targets: [
-        model,
-
-        // MARK: Storage
-
-        storageInterface,
-        storage,
-
-        // MARK: Service
-
-        serviceInterface,
-        service,
-
-        // MARK: Network
-
-        networkInterface,
-        network,
+        imageLoader
     ],
     testTargets: []
 )

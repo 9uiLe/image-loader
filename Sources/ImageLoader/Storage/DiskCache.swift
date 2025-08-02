@@ -1,6 +1,4 @@
 import Foundation
-import Model
-import StorageInterface
 
 public actor DiskCache: DiskCacheProtocol {
     private let cacheURL: URL

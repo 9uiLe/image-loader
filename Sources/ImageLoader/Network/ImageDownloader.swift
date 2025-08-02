@@ -1,6 +1,4 @@
 import Foundation
-import Model
-import NetworkInterface
 import UIKit
 
 public actor ImageDownloader: ImageDownloaderProtocol {
