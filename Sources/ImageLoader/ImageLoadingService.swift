@@ -1,5 +1,6 @@
 import Foundation
-import Interface
+import NetworkInterface
+import ServiceInterface
 import UIKit
 
 public actor ImageLoadingService: ImageLoadingServiceProtocol {
@@ -13,7 +14,7 @@ public actor ImageLoadingService: ImageLoadingServiceProtocol {
         self.cache = cache
         self.downloader = downloader
     }
-    
+
     public func loadImage(
         from url: URL,
         targetSize: CGSize?
@@ -25,13 +26,13 @@ public actor ImageLoadingService: ImageLoadingServiceProtocol {
         ) {
             return cachedImage
         }
-        
+
         // ダウンロード
         let image = try await downloader.download(from: url)
-        
+
         // キャッシュに保存
         await cache.store(image, for: url, targetSize: targetSize)
-        
+
         return image
     }
 }

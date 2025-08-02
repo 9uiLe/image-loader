@@ -1,5 +1,6 @@
 import Foundation
-import Interface
+import ServiceInterface
+import StorageInterface
 import UIKit
 
 public actor ImageCacheService: ImageCacheServiceProtocol {

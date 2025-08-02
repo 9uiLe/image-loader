@@ -1,5 +1,5 @@
+import ServiceInterface
 import SwiftUI
-import Interface
 
 @MainActor
 @Observable
@@ -20,14 +20,14 @@ public final class ImageLoader {
         self.loadingService = loadingService
         self.targetSize = targetSize
     }
-    
+
     public func load(from url: URL) {
         guard currentURL != url else { return }
-        
+
         cancel()
         currentURL = url
         error = nil
-        
+
         loadTask = Task { @MainActor [weak self] in
             self?.isLoading = true
             defer { self?.isLoading = false }
@@ -47,7 +47,7 @@ public final class ImageLoader {
             }
         }
     }
-    
+
     public func cancel() {
         loadTask?.cancel()
         loadTask = nil

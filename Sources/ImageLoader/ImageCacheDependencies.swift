@@ -1,4 +1,4 @@
-import Interface
+import ServiceInterface
 import Model
 
 public struct ImageCacheDependencies: Sendable {

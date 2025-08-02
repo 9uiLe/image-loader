@@ -1,5 +1,5 @@
 import Foundation
-import Interface
+import StorageInterface
 import UIKit
 
 public actor ImageStorage: ImageStorageProtocol {
@@ -23,7 +23,9 @@ public actor ImageStorage: ImageStorageProtocol {
 
         // ディスクキャッシュに保存
         let storeDiskCache: () async throws -> Void = { [diskCache] in
-            guard let data = image.jpegData(compressionQuality: 0.8) else { return }
+            guard let data = image.jpegData(compressionQuality: 0.8) else {
+                return
+            }
             try await diskCache.store(data, for: key)
         }
 

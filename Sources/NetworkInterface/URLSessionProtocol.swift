@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 /// @mockable
 public protocol URLSessionProtocol: Sendable {
@@ -7,9 +6,3 @@ public protocol URLSessionProtocol: Sendable {
 }
 
 extension URLSession: URLSessionProtocol {}
-
-/// @mockable
-public protocol ImageDownloaderProtocol: Actor {
-    func download(from url: URL) async throws -> UIImage
-    func cancelDownload(for url: URL)
-}
