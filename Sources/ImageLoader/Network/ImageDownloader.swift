@@ -5,7 +5,7 @@ public actor ImageDownloader: ImageDownloaderProtocol {
     private let session: any URLSessionProtocol
     private var activeTasks: [URL: Task<UIImage, Error>] = [:]
 
-    init(session: any URLSessionProtocol = URLSession.shared) {
+    public init(session: any URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
 
