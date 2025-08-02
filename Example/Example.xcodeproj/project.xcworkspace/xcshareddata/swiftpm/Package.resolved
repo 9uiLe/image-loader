@@ -1,0 +1,15 @@
+{
+  "originHash" : "8c40171052113ceecc361a6c6023eee02feffe008fe7004b310130765d3b7958",
+  "pins" : [
+    {
+      "identity" : "run-mockolo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/9uiLe/run-mockolo",
+      "state" : {
+        "revision" : "b699ea58b2808cb5ee8a4c9813e5fbae1d436d7b",
+        "version" : "1.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}
