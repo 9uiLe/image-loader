@@ -4,7 +4,7 @@ public struct ImageCacheDependencies: Sendable {
     public let loadingService: any ImageLoadingServiceProtocol
     public let prefetchService: any ImagePrefetchServiceProtocol
 
-    public init(configuration: CacheConfiguration) async throws {
+    public init(configuration: CacheConfiguration) throws {
         let memoryCache = MemoryCache(configuration: configuration)
         let diskCache = try DiskCache(configuration: configuration)
         let storage = ImageStorage(memoryCache: memoryCache, diskCache: diskCache)

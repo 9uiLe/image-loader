@@ -36,24 +36,31 @@ final class CachedImageLoader {
         cancel()
         currentURL = url
 
-        loadTask = Task { @MainActor [weak self] in
+        loadTask = Task.detached(priority: .userInitiated) { [weak self] in
             do {
                 guard let self else {
                     throw ImageCachedLoaderError.deallocatedSelf
                 }
 
-                phase = .loading
+                await MainActor.run {
+                    self.phase = .loading
+                }
+
                 let image = try await loadingService.loadImage(
                     from: url,
                     targetSize: targetSize
                 )
 
                 guard !Task.isCancelled else { return }
-                phase = .success(image)
+                await MainActor.run {
+                    self.phase = .success(image)
+                }
 
             } catch {
                 guard !Task.isCancelled else { return }
-                self?.phase = .failure(error)
+                await MainActor.run { [weak self] in
+                    self?.phase = .failure(error)
+                }
             }
         }
     }

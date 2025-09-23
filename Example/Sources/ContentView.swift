@@ -7,57 +7,66 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(viewModel.imageData, id: \.id) { data in
+                ForEach($viewModel.imageData, id: \.id) { $data in
                     CachedAsyncImage(
+                        id: data.id,
                         url: data.url,
-                        loadingService: data.loadingService,
+                        imageLoader: data.imageLoader
                     )
-                    .frame(maxWidth: .infinity)
+                    .frame(width: 100)
                 }
             }
             .padding(16)
-        }
-        .task {
-            await viewModel.setup()
         }
     }
 }
 
 struct CachedAsyncImage: View {
-    private let url: URL
-    private let contentMode: ContentMode
+    private let id: UUID
+    private var url: URL
+    private var contentMode: ContentMode
 
-    @State private var imageLoader: CachedImageLoader
+    @Bindable private var imageLoader: CachedImageLoader
 
     init(
+        id: UUID,
         url: URL,
-        loadingService: any ImageLoadingServiceProtocol,
+        imageLoader: CachedImageLoader,
         contentMode: ContentMode = .fit
     ) {
+        print("\(id.uuidString): \(#function)")
+        self.id = id
         self.url = url
         self.contentMode = contentMode
-        self.imageLoader = CachedImageLoader(loadingService: loadingService)
+        self._imageLoader = Bindable(imageLoader)
     }
 
     var body: some View {
-        switch imageLoader.phase {
-        case .idle:
-            Color.cyan
-                .onAppear {
-                    imageLoader.load(from: url)
-                }
+        Group {
+            switch imageLoader.phase {
+            case .idle:
+                let _ = print("\(id.uuidString): .idle")
+                Color.cyan
+                    .onAppear {
+                        imageLoader.load(from: url)
+                    }
 
-        case .loading:
-            Color.red
+            case .loading:
+                let _ = print("\(id.uuidString): .loading")
+                Color.red
 
-        case .success(let image):
-            Image(uiImage: image)
-                .resizable()
-                .aspectRatio(nil, contentMode: contentMode)
+            case let .success(image):
+                let _ = print("\(id.uuidString): .success")
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(nil, contentMode: contentMode)
 
-        case .failure:
-            Color.gray
+            case .failure:
+                let _ = print("\(id.uuidString): .failure")
+                Color.gray
+            }
         }
+        .id(id)
     }
 }
 
