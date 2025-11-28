@@ -11,13 +11,14 @@ let package = Package(
         .library(name: "ImageLoader", targets: ["ImageLoader"])
     ],
     dependencies: [
-        .package(url: "https://github.com/9uiLe/run-mockolo", exact: "1.0.2")
+        .package(url: "https://github.com/9uiLe/run-mockolo", exact: "1.0.3")
     ],
     targets: [
         .target(
             name: "ImageLoader",
-            dependencies: [
-                .product(name: "RunMockolo", package: "run-mockolo")
+            dependencies: [],
+            plugins: [
+                .plugin(name: "RunMockolo", package: "run-mockolo")
             ]
         )
     ],

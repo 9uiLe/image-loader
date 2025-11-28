@@ -1,13 +1,13 @@
 {
-  "originHash" : "d9ee52fbb2342f9a8bf685e164a90b47911c95499c56f07d050fbd17cd05a8df",
+  "originHash" : "46b6f9fc0e73468117bc649aea8bb1009b82a4cf6992c88b781c6a8678c6af10",
   "pins" : [
     {
       "identity" : "run-mockolo",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/9uiLe/run-mockolo.git",
       "state" : {
-        "revision" : "b699ea58b2808cb5ee8a4c9813e5fbae1d436d7b",
-        "version" : "1.0.2"
+        "revision" : "9ac77d1ab36db911574b71ac06de7beb7817618e",
+        "version" : "1.0.3"
       }
     }
   ],
