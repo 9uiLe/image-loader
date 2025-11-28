@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -23,7 +23,7 @@ let imageLoader = Target.target(
 let package = Package.package(
     name: "image-loader",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v18)
     ],
     dependencies: [
         .package(url: "https://github.com/9uiLe/run-mockolo", exact: "1.0.2")
